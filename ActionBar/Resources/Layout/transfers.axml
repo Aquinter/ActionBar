@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:minWidth="25px"
+    android:minHeight="25px">
+    <Button
+        android:text="Start QR Scan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button1" />
+    <TextView
+        android:text="New Payment"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1" />
+    <TableLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="258.5dp"
+        android:id="@+id/tableLayout1"
+        android:stretchColumns="1">
+        <TableRow
+            android:id="@+id/tableRow1">
+            <TextView
+                android:text="Due Date"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/textView14"
+                android:layout_marginRight="0.0dp"
+                android:layout_width="83.0dp" />
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/duedate" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow2">
+            <TextView
+                android:text="Amount"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/textView15" />
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/amount" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow3">
+            <TextView
+                android:text="Firm name"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/textView16" />
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/firmname" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow5">
+            <TextView
+                android:text="Address"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/textView17" />
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/firmaddress1" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow4">
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/firmaddress2" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow6">
+            <TextView
+                android:text="IBAN"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/textView22" />
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/iban" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow7">
+            <TextView
+                android:text="BIC"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/textView29" />
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/bic" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow9">
+            <TextView
+                android:text="Reference"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/textView30" />
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
+                android:id="@+id/reference"
+                android:layout_height="112.4dp" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

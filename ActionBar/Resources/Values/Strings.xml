@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ApplicationName">ActionBar</string>
+
+  <string name="dummy_title">Send mail</string>
+  <string name="dummy_subtitle">Click phone to dial number</string>
+
+  <string name="delete_content_description">Delete</string>
+
+  <string name="touched_primary_message">Touched primary list item target.</string>
+  <string name="touched_secondary_message">Touched secondary list item target (delete).</string>
+
+  <string name="drawer_open">Open</string>
+  <string name="drawer_close">Close</string>
+  
+  <string name="title_section1">Accounts</string>
+  <string name="title_section2">Credit Cards</string>
+  <string name="title_section3">Transfers</string>
+</resources>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <style name="Theme.ING" parent="android:style/Theme.Holo.Light">
+    <item name="android:actionBarStyle">@style/Theme.ING.ActionBar</item>
+  </style>
+
+  <style name="Theme.ING.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+    <item name="android:background">#ffdcdcdc</item>
+  </style>
+</resources>
