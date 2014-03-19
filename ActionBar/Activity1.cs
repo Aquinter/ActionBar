@@ -19,6 +19,9 @@ using ZXing.Mobile;
 //xml parsing
 using System.Xml;
 using System.IO;
+//queue
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace ActionBar
 {
@@ -29,7 +32,7 @@ namespace ActionBar
         private MyActionBarDrawerToggle drawerToggle;
         private ListView drawerListView;
         private String[] drawerList = { "Mobile Banking", "Branches", "Contact", "Appointment", "Info" };
-
+        private Queue<Payment> queue = new Queue<Payment>();
         /*
          * OnCreate is called when app is started (equivalent to main in ordinary C#)
          */
@@ -118,6 +121,11 @@ namespace ActionBar
                         var result = await scanner.Scan();
                         readXML(result.Text);
                     };
+                    Button btn2 = FindViewById<Button>(Resource.Id.button2);
+                    btn2.Click += delegate
+                    {
+                        toastQueue();
+                    };
                     break;
                 default:
                     break;
@@ -129,6 +137,7 @@ namespace ActionBar
             using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
             {
                 TextView[] txt = new TextView[8];
+                String[] txtStr = new String[12];
                 txt[0] = FindViewById<TextView>(Resource.Id.duedate);
                 txt[1] = FindViewById<TextView>(Resource.Id.amount);
                 txt[2] = FindViewById<TextView>(Resource.Id.firmname);
@@ -141,33 +150,73 @@ namespace ActionBar
                 reader.ReadToFollowing("payment");
                 reader.MoveToFirstAttribute();      //duedate
                 txt[0].Text = reader.Value;
+                txtStr[0] = reader.Value;
                 reader.MoveToNextAttribute();       //currency
                 txt[1].Text = reader.Value;
+                txtStr[1] = reader.Value;
                 reader.MoveToNextAttribute();       //amount
                 txt[1].Text += " " + reader.Value;
+                txtStr[2] = reader.Value;
                 reader.MoveToNextAttribute();       //firmname
                 txt[2].Text = reader.Value;
+                txtStr[3] = reader.Value;
                 reader.MoveToNextAttribute();       //firm address (street)
                 txt[3].Text = reader.Value;
+                txtStr[4] = reader.Value;
                 reader.MoveToNextAttribute();       //firm address (number)
                 txt[3].Text += " " + reader.Value;
+                txtStr[5] = reader.Value;
                 reader.MoveToNextAttribute();       //firm zipcode
                 txt[4].Text = reader.Value;
+                txtStr[6] = reader.Value;
                 reader.MoveToNextAttribute();       //firm city
                 txt[4].Text += " " + reader.Value;
+                txtStr[7] = reader.Value;
                 reader.MoveToNextAttribute();       //iban
                 txt[5].Text = reader.Value;
+                txtStr[8] = reader.Value;
                 reader.MoveToNextAttribute();       //bic
                 txt[6].Text = reader.Value;
+                txtStr[9] = reader.Value;
                 reader.MoveToNextAttribute();       //reference
                 txt[7].Text = reader.Value;
+                txtStr[10] = reader.Value;
+                reader.MoveToNextAttribute();
+                txtStr[11] = reader.Value;
+
+                Payment newPayment = new Payment();
+
+                try
+                {
+                    newPayment = new Payment(Convert.ToDateTime(txtStr[0], new CultureInfo("ru-RU")), txtStr[1], Convert.ToDecimal(txtStr[2]), txtStr[3], txtStr[4] + " " + txtStr[5] + " " + txtStr[6] + " " + txtStr[7], txtStr[8], txtStr[9], txtStr[10], txtStr[11]);
+                }
+                catch (Exception e)
+                {
+                    Toast.MakeText(this, e.Message, ToastLength.Long).Show();
+                }
+
+                queue.Enqueue(newPayment);
             }
         }
 
+        public void toastQueue()
+        {
+            String str = "";
+            int queueCount = queue.Count;
+
+            str += "Items: " + queueCount + "\n";
+            str += "Last item:\n";
+            str += "Firm name: " + queue.Peek().firmName + "\n";
+            str += "Amount: " + queue.Peek().currency + " " + queue.Peek().amount + "\n";
+            str += "Duedate: " + queue.Peek().dueDate.ToString();
+
+            Toast.MakeText(this, str, ToastLength.Long).Show();
+        }
+
         /*
-         * Some needed overrides for the navigation drawer (don't ask why, idk)
+         * Some needed overrides for the navigation drawer
          */
-        
+
         protected override void OnPostCreate(Bundle savedInstanceState)
         {
             base.OnPostCreate(savedInstanceState);

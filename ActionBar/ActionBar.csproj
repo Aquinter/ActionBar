@@ -67,6 +67,7 @@
     <Compile Include="InfoListItem.cs" />
     <Compile Include="MyActionBarDrawerToggle.cs" />
     <Compile Include="InfoListAdapter.cs" />
+    <Compile Include="Payment.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

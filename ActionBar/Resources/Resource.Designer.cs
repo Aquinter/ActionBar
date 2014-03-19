@@ -128,7 +128,10 @@ namespace ActionBar
 			public const int button1 = 2131165194;
 			
 			// aapt resource value: 0x7f070023
-			public const int contentFrame = 2131165219;
+			public const int button2 = 2131165219;
+			
+			// aapt resource value: 0x7f070024
+			public const int contentFrame = 2131165220;
 			
 			// aapt resource value: 0x7f070008
 			public const int content_frame = 2131165192;
