@@ -195,6 +195,28 @@ namespace ActionBar
                     Toast.MakeText(this, e.Message, ToastLength.Long).Show();
                 }
 
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                AlertDialog alertDialog = builder.Create();
+                alertDialog.SetTitle("Warning");
+                alertDialog.SetMessage("Are you sure you sure you want to enlist a payment of >€1000?");
+                alertDialog.SetIcon(Android.Resource.Drawable.IcDialogInfo);
+                alertDialog.SetButton("OK", (s, ev) =>
+                {
+                    AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+                    AlertDialog alertDialog2 = builder.Create();
+                    alertDialog2.SetTitle("Payment enlisted");
+                    //alertDialog2.SetMessage(editTxt.Text);
+                    alertDialog2.SetIcon(Android.Resource.Drawable.IcDialogAlert);
+                    alertDialog2.SetButton("OK", (s2, ev2) =>
+                    {
+                        //do something
+                    });
+                    alertDialog2.Show();
+                });
+                alertDialog.Show();
+
+
                 queue.Enqueue(newPayment);
             }
         }
