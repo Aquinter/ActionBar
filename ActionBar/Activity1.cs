@@ -32,7 +32,7 @@ namespace ActionBar
         private MyActionBarDrawerToggle drawerToggle;
         private ListView drawerListView;
         private String[] drawerList = { "Mobile Banking", "Branches", "Contact", "Appointment", "Info" };
-        private Queue<Payment> queue = new Queue<Payment>();
+        private List<Payment> paymentList = new List<Payment>();
         /*
          * OnCreate is called when app is started (equivalent to main in ordinary C#)
          */
@@ -196,41 +196,58 @@ namespace ActionBar
                 }
 
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                AlertDialog alertDialog = builder.Create();
-                alertDialog.SetTitle("Warning");
-                alertDialog.SetMessage("Are you sure you sure you want to enlist a payment of >€1000?");
-                alertDialog.SetIcon(Android.Resource.Drawable.IcDialogInfo);
-                alertDialog.SetButton("OK", (s, ev) =>
+                if (newPayment.amount > 1000)
                 {
-                    AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
-                    AlertDialog alertDialog2 = builder.Create();
-                    alertDialog2.SetTitle("Payment enlisted");
-                    //alertDialog2.SetMessage(editTxt.Text);
-                    alertDialog2.SetIcon(Android.Resource.Drawable.IcDialogAlert);
-                    alertDialog2.SetButton("OK", (s2, ev2) =>
-                    {
-                        //do something
-                    });
-                    alertDialog2.Show();
-                });
-                alertDialog.Show();
+                    showLargePaymentPopUp(newPayment);
+                }
+                else
+                {
+                    paymentList.Add(newPayment);
+                }
 
-
-                queue.Enqueue(newPayment);
+                //queue.Enqueue(newPayment);
+                //paymentList.Add(newPayment);
             }
+        }
+
+        private void showLargePaymentPopUp(Payment payment)
+        {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            AlertDialog alertDialog = builder.Create();
+            alertDialog.SetTitle("Warning");
+            alertDialog.SetMessage("Are you sure you sure you want to enlist a payment of >€1000?");
+            alertDialog.SetIcon(Android.Resource.Drawable.IcDialogInfo);
+            alertDialog.SetButton("Yes", (s, ev) =>
+            {
+                AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+                AlertDialog alertDialog2 = builder.Create();
+                alertDialog2.SetTitle("Payment enlisted");
+                //alertDialog2.SetMessage(editTxt.Text);
+                alertDialog2.SetIcon(Android.Resource.Drawable.IcDialogAlert);
+                alertDialog2.SetButton("OK", (s2, ev2) =>
+                {
+                    //do something
+                });
+                alertDialog2.Show();
+
+                paymentList.Add(payment);
+            });
+            /*alertDialog.SetButton("No", (s, ev) =>
+            {
+            });*/
+            alertDialog.Show();
         }
 
         public void toastQueue()
         {
             String str = "";
-            int queueCount = queue.Count;
+            int listCount = paymentList.Count;
+            Payment lastPayment = paymentList[listCount - 1];
 
-            str += "Items: " + queueCount + "\n";
-            str += "Last item:\n";
-            str += "Firm name: " + queue.Peek().firmName + "\n";
-            str += "Amount: " + queue.Peek().currency + " " + queue.Peek().amount + "\n";
-            str += "Duedate: " + queue.Peek().dueDate.ToString();
+            str += "Items: " + listCount + "; Last item:\n";
+            str += "Firm name: " + lastPayment.firmName + "\n";
+            str += "Amount: " + lastPayment.currency + " " + lastPayment.amount + "\n";
+            str += "Duedate: " + lastPayment.dueDate.ToString();
 
             Toast.MakeText(this, str, ToastLength.Long).Show();
         }
