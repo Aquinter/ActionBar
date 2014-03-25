@@ -7,7 +7,7 @@
     android:divider="?android:dividerVertical"
     android:dividerPadding="8dp"
     android:showDividers="middle">
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/primary_target"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -21,22 +21,47 @@
         android:background="?android:selectableItemBackground">
         <TextView
             style="?android:textAppearanceListItemSmall"
-            android:id="@android:id/text1"
+            android:id="@+id/nameTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="0dp"
+            android:textSize="20sp"
             android:text="Current Account" />
         <TextView
             style="?android:textAppearanceSmall"
-            android:id="@android:id/text2"
+            android:id="@+id/ibanTxt"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:textSize="12sp"
+            android:textColor="#ffbebebe"
+            android:text="BE09 1231 2345 6712" />
+        <TextView
+            style="?android:textAppearanceSmall"
+            android:id="@+id/ownerTxt"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="34dp"
+            android:textSize="10sp"
+            android:textColor="#ffbebebe"
+            android:text="The owner has a very long name" />
+        <TextView
+            style="?android:textAppearanceSmall"
+            android:id="@+id/amountTxt"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="34dp"
+            android:textSize="10sp"
+            android:text="€9.120.645,25"
+            android:textColor="#ffb3c833"
+            android:layout_alignParentRight="true" />
+        <ImageView
+            android:id="@+id/optionsBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BE09 1231 2345 6712" />
-    </LinearLayout>
-    <ImageButton
-        android:id="@+id/secondary_action"
-        style="?android:borderlessButtonStyle"
-        android:layout_width="@dimen/standard_touch_target_size"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_drawer"
-        android:contentDescription="@string/delete_content_description" />
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_account_options" />
+    </RelativeLayout>
 </LinearLayout>

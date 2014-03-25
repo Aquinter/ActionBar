@@ -33,6 +33,7 @@ namespace ActionBar
         private ListView drawerListView;
         private String[] drawerList = { "Mobile Banking", "Branches", "Contact", "Appointment", "Info" };
         private List<Payment> paymentList = new List<Payment>();
+        
         /*
          * OnCreate is called when app is started (equivalent to main in ordinary C#)
          */
@@ -107,7 +108,11 @@ namespace ActionBar
             switch (tab.Position)
             {
                 case 0:
-                    LayoutInflater.Inflate(Resource.Layout.accounts, frame);
+                    //LayoutInflater.Inflate(Resource.Layout.accounts, frame);
+                    LayoutInflater.Inflate(Resource.Layout.List, frame);
+                    //removeAllTabs();
+                    ListView contentListView = FindViewById<ListView>(Resource.Id.activity_list);
+                    contentListView.Adapter = new AccountListAdapter(this);
                     break;
                 case 1:
                     LayoutInflater.Inflate(Resource.Layout.credits, frame);

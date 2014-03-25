@@ -56,13 +56,15 @@
       <HintPath>..\Components\xamandroidsupportv4-18-4.19.0.1\lib\android\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
     <Reference Include="zxing.monoandroid">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Xamarin\Libraries\Zxing Mobile\zxing.monoandroid.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Xamarin\Libraries\Zxing Mobile\zxing.monoandroid.dll</HintPath>
     </Reference>
     <Reference Include="ZXing.Net.Mobile">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Xamarin\Libraries\Zxing Mobile\ZXing.Net.Mobile.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Xamarin\Libraries\Zxing Mobile\ZXing.Net.Mobile.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account.cs" />
+    <Compile Include="AccountListAdapter.cs" />
     <Compile Include="Activity1.cs" />
     <Compile Include="InfoListItem.cs" />
     <Compile Include="MyActionBarDrawerToggle.cs" />
@@ -147,6 +149,7 @@
     <AndroidResource Include="Resources\Drawable-hdpi\ic_action_facebook.png" />
     <AndroidResource Include="Resources\Drawable-xhdpi\ic_action_facebook.png" />
     <AndroidResource Include="Resources\Drawable-xhdpi\ic_action_twitter.png" />
+    <AndroidResource Include="Resources\Drawable-mdpi\ic_account_options.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="xamandroidsupportv4-18">
