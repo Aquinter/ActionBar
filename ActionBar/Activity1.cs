@@ -32,7 +32,7 @@ namespace ActionBar
         private DrawerLayout drawerLayout;
         private MyActionBarDrawerToggle drawerToggle;
         private ListView drawerListView;
-        private String[] drawerList = { "Mobile Banking", "Branches", "Contact", "Appointment", "Info" };
+        private String[] drawerList = { "Mobile Banking", "Branches", "Contact", "Appointment", "Info", "Settings" };
         private List<Payment> paymentList = new List<Payment>();
         
         /*
@@ -210,9 +210,6 @@ namespace ActionBar
                 {
                     paymentList.Add(newPayment);
                 }
-
-                //queue.Enqueue(newPayment);
-                //paymentList.Add(newPayment);
             }
         }
 
@@ -238,9 +235,6 @@ namespace ActionBar
 
                 paymentList.Add(payment);
             });
-            /*alertDialog.SetButton("No", (s, ev) =>
-            {
-            });*/
             alertDialog.Show();
         }
 
@@ -315,6 +309,12 @@ namespace ActionBar
                     removeAllTabs();
                     ListView contentListView = FindViewById<ListView>(Resource.Id.activity_list);
                     contentListView.Adapter = new InfoListAdapter(this);
+                    break;
+                case 5:
+                    LayoutInflater.Inflate(Resource.Layout.List, frame);
+                    removeAllTabs();
+                    ListView contentListView2 = FindViewById<ListView>(Resource.Id.activity_list);
+                    contentListView2.Adapter = new SettingsListAdapter(this);
                     break;
                 default:
                     break;
