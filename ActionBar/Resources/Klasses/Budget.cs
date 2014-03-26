@@ -10,11 +10,9 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 	{
 		//Class variables
 		List<Payment> paymentList;
-		Decimal treshold;
-		Decimal totalAmount; //Should be resetted once in eg a month
+		decimal treshold;
 
-
-		public Budget(Decimal treshold)
+		public Budget(decimal treshold)
 		{
 			paymentList = new List<Payment>();
 			this.resetTotalAmount();
@@ -25,14 +23,27 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 			paymentList.add(payment);
 			totalAmount += payment.getAmount();
 		}
-		public void resetTotalAmount()
+		public void removePayment(Payment payment)
+		{
+			paymentList.RemoveAt(IndexOf(payment));
+		}
+		public void resetList()
 		{
 			totalAmount = 0;
+			paymentList.Clear();
 		}
 		public bool overTreshold()
 		{
-			return totalAmount >= treshold;
+			return getTotalAmount >= treshold;
 		}
-
+		public decimal getTotalAmount()
+		{
+			decimal total = 0.0m;
+			foreach (Payment payment in paymentList)
+			{
+				total += payment.getAmount();
+			}
+			return total;
+		}
 	}
 }
