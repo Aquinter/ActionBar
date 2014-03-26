@@ -66,7 +66,7 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 		{
 			return Bus > 0 ? Street + " " + PostalNumber + " bus " + Bus + "\n" + CityCode + " " + City + "\n" + Country : Street + " " + PostalNumber + "\n" + CityCode + " " + City + "\n" + Country;
 		}
-		public double distanceBetween(Address pointB) //Haversine implementation
+		public double distanceBetween(Adress pointB) //Haversine implementation
 		{
 			if(this.CoordinatesSet && pointB.CoordinatesSet)
 			{
@@ -82,7 +82,7 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 			}
 			return -1;
 		}
-		public int intDistanceBetween(Address pointB)
+		public int intDistanceBetween(Adress pointB)
 		{
 			return (int)this.distanceBetween(pointB);
 		}

@@ -22,6 +22,7 @@ using System.IO;
 //queue
 using System.Collections.Generic;
 using System.Globalization;
+using IngHackaton;
 
 namespace ActionBar
 {
@@ -193,7 +194,7 @@ namespace ActionBar
 
                 try
                 {
-                    newPayment = new Payment(Convert.ToDateTime(txtStr[0], new CultureInfo("ru-RU")), txtStr[1], Convert.ToDecimal(txtStr[2]), txtStr[3], txtStr[4] + " " + txtStr[5] + " " + txtStr[6] + " " + txtStr[7], txtStr[8], txtStr[9], txtStr[10], txtStr[11]);
+                    newPayment = new Payment(Convert.ToDateTime(txtStr[0], new CultureInfo("ru-RU")), txtStr[1], Convert.ToDecimal(txtStr[2]), txtStr[3], new Address(txtStr[4], Convert.ToInt32(txtStr[5]), Convert.ToInt32(txtStr[6]), txtStr[7], "BEL" ), txtStr[8], txtStr[9], txtStr[10], txtStr[11]);
                 }
                 catch (Exception e)
                 {
@@ -222,7 +223,7 @@ namespace ActionBar
             alertDialog.SetTitle("Warning");
             alertDialog.SetMessage("Are you sure you sure you want to enlist a payment of >€1000?");
             alertDialog.SetIcon(Android.Resource.Drawable.IcDialogInfo);
-            alertDialog.SetButton("Yes", (s, ev) =>
+            alertDialog.SetButton("Yes", (s1, ev) =>
             {
                 AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
                 AlertDialog alertDialog2 = builder.Create();
