@@ -15,26 +15,26 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 		public Budget(decimal treshold)
 		{
 			paymentList = new List<Payment>();
-			this.resetTotalAmount();
+			this.resetList();
 			this.treshold = treshold;
 		}
 		public void addPayment(Payment payment)
 		{
-			paymentList.add(payment);
-			totalAmount += payment.getAmount();
+			paymentList.Add(payment);
 		}
 		public void removePayment(Payment payment)
 		{
-			paymentList.RemoveAt(IndexOf(payment));
+
+			//Still needs implementation
+			//paymentList.RemoveAt(IndexOf(payment));
 		}
 		public void resetList()
 		{
-			totalAmount = 0;
 			paymentList.Clear();
 		}
 		public bool overTreshold()
 		{
-			return getTotalAmount >= treshold;
+			return getTotalAmount() >= treshold;
 		}
 		public decimal getTotalAmount()
 		{
