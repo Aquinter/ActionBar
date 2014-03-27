@@ -143,9 +143,8 @@ namespace ActionBar
         {
             using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
             {
-                /*
+                
                 TextView[] txt = new TextView[8];
-                String[] txtStr = new String[12];
                 txt[0] = FindViewById<TextView>(Resource.Id.duedate);
                 txt[1] = FindViewById<TextView>(Resource.Id.amount);
                 txt[2] = FindViewById<TextView>(Resource.Id.firmname);
@@ -154,8 +153,8 @@ namespace ActionBar
                 txt[5] = FindViewById<TextView>(Resource.Id.iban);
                 txt[6] = FindViewById<TextView>(Resource.Id.bic);
                 txt[7] = FindViewById<TextView>(Resource.Id.reference);
-                */
-                Dictionary<String, String> paymentAttribs = new Dictionary<String, String>(13);
+                
+                Dictionary<String, String> paymentAttribs = new Dictionary<String, String>(20);
 
                 reader.ReadToFollowing("payment");
 
@@ -175,6 +174,16 @@ namespace ActionBar
                 {
                     paymentList.Add(newPayment);
                 }
+                
+                txt[0].Text = newPayment.dueDate.ToString();
+                txt[1].Text = newPayment.currency + " " + newPayment.amount.ToString();
+                txt[2].Text = newPayment.firmName;
+                txt[3].Text = newPayment.address.toString();
+                txt[4].Text = "";
+                txt[5].Text = newPayment.iban;
+                txt[6].Text = newPayment.bic;
+                txt[7].Text = newPayment.reference;
+                
             }
         }
 
@@ -184,7 +193,12 @@ namespace ActionBar
             string amount = "";
             string currency = "";
             string firmname = "";
-            string firmaddress = "";
+            string firmstreet = "";
+            string firmnumber = "";
+            string firmcity = "";
+            string firmzipcode = "";
+            string firmcountry = "";
+            string firmbus = "";
             string iban = "";
             string bic = "";
             string reference = "";
@@ -194,15 +208,18 @@ namespace ActionBar
             list.TryGetValue("firmname", out firmname);
             list.TryGetValue("iban", out iban);
             list.TryGetValue("bic", out bic);
-            list.TryGetValue("reference", out reference);
-            list.TryGetValue("referencetype", out referencetype);
+            list.TryGetValue("ref", out reference);
+            list.TryGetValue("type", out referencetype);
             list.TryGetValue("duedate", out duedate);
             list.TryGetValue("amount", out amount);
-            list.TryGetValue("address", out firmaddress);
-			
-            Payment newPayment = new Payment(Convert.ToDateTime(duedate, new CultureInfo("ru-RU")), currency, Convert.ToDecimal(amount), iban, bic, reference, referencetype);
-			
-            return newPayment;
+            list.TryGetValue("street", out firmstreet);
+            list.TryGetValue("number", out firmnumber);
+            list.TryGetValue("bus", out firmbus);
+            list.TryGetValue("city", out firmcity);
+            list.TryGetValue("zip", out firmzipcode);
+            list.TryGetValue("country", out firmcountry);
+
+            return new Payment(Convert.ToDateTime(duedate, new CultureInfo("ru-RU")), currency, Convert.ToDecimal(amount), firmname, new Address(firmstreet, Convert.ToInt32(firmnumber), Convert.ToInt32(firmbus), Convert.ToInt32(firmzipcode), firmcity, firmcountry),iban, bic, reference, referencetype);
         }
 
         private void showLargePaymentPopUp(Payment payment)

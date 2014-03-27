@@ -8,74 +8,74 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 {
 	public class Address
 	{
-		private string Street {get; set;}
-		private int PostalNumber {get; set;}
-		private int Bus {get; set;}
-		private int CityCode {get; set;}
-		private string City {get; set;}
-		private string Country {get; set;}
-		private double Latitude {get; set;}		//By convention: "+" for N, "-" for S
-		private double Longitude {get; set;}		//By convention: "+" for E, "-" for W
-		private bool CoordinatesSet {get; set;}
+		private string firmStreet {get; set;}
+		private int firmNumber {get; set;}
+		private int firmBus {get; set;}
+		private int firmZipCode {get; set;}
+		private string firmCity {get; set;}
+		private string firmCountry {get; set;}
+		private double latitude {get; set;}		//By convention: "+" for N, "-" for S
+		private double longitude {get; set;}		//By convention: "+" for E, "-" for W
+		private bool coordinatesSet {get; set;}
 
 		public Address(string street, int postalNumber, int bus, int cityCode, string city, string country, int latitude, int longitude)
 		{
-			Street = street;
-			PostalNumber = postalNumber;
-			Bus = bus;
-			CityCode = cityCode;
-			City = city;
-			Country = country;
-			Latitude = latitude;
-			Longitude = longitude;
-			CoordinatesSet = true;
+            this.firmStreet = street;
+            this.firmNumber = postalNumber;
+            this.firmBus = bus;
+            this.firmZipCode = cityCode;
+            this.firmCity = city;
+            this.firmCountry = country;
+			this.latitude = latitude;
+            this.longitude = longitude;
+            this.coordinatesSet = true;
 		}
 		public Address(string street, int postalNumber, int bus, int cityCode, string city, string country)
 		{
 			//Address(street, postalNumber, bus, cityCode, city, country, 0, 0);
-			Street = street;
-			PostalNumber = postalNumber;
-			Bus = bus;
-			CityCode = cityCode;
-			City = city;
-			Country = country;
-			Latitude = 0;
-			Longitude = 0;
-			CoordinatesSet = false;
+            this.firmStreet = street;
+            this.firmNumber = postalNumber;
+            this.firmBus = bus;
+            this.firmZipCode = cityCode;
+            this.firmCity = city;
+            this.firmCountry = country;
+            this.latitude = 0;
+            this.longitude = 0;
+            this.coordinatesSet = false;
 		}
 		public Address(string street, int postalNumber, int cityCode, string city, string country)
 		{
 			//Adress(street, postalNumber, 0, cityCode, city, country, 0, 0);
-			Street = street;
-			PostalNumber = postalNumber;
-			Bus = 0;
-			CityCode = cityCode;
-			City = city;
-			Country = country;
-			Latitude = 0;
-			Longitude = 0;
-			CoordinatesSet = false;
+            this.firmStreet = street;
+            this.firmNumber = postalNumber;
+            this.firmBus = 0;
+            this.firmZipCode = cityCode;
+            this.firmCity = city;
+            this.firmCountry = country;
+            this.latitude = 0;
+            this.longitude = 0;
+            this.coordinatesSet = false;
 		}
 		public void setCoordinates(double latitude, double longitude)
 		{
-			Latitude = latitude;
-			Longitude = longitude;
-			CoordinatesSet = true;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.coordinatesSet = true;
 		}
 		public string toString()
 		{
-			return Bus > 0 ? Street + " " + PostalNumber + " bus " + Bus + "\n" + CityCode + " " + City + "\n" + Country : Street + " " + PostalNumber + "\n" + CityCode + " " + City + "\n" + Country;
+			return firmBus > 0 ? firmStreet + " " + firmNumber + " bus " + firmBus + "\n" + firmZipCode + " " + firmCity + "\n" + firmCountry : firmStreet + " " + firmNumber + "\n" + firmZipCode + " " + firmCity + "\n" + firmCountry;
 		}
 		public double distanceBetween(Address pointB) //Haversine implementation
 		{
-			if(this.CoordinatesSet && pointB.CoordinatesSet)
+			if(this.coordinatesSet && pointB.coordinatesSet)
 			{
 				double R = 6371; //Radius of the earth in km
-				double deltaLatitude = pointB.Latitude - this.Latitude;
-				double deltaLongitude = pointB.Longitude - this.Longitude;
+				double deltaLatitude = pointB.latitude - this.latitude;
+				double deltaLongitude = pointB.longitude - this.longitude;
 
 
-				double a = Math.Sin(deltaLatitude/2) * Math.Sin(deltaLatitude/2) + Math.Sin(deltaLongitude/2) * Math.Sin(deltaLongitude/2) * Math.Cos(toRad(this.Latitude)) * Math.Cos(toRad(pointB.Latitude));
+				double a = Math.Sin(deltaLatitude/2) * Math.Sin(deltaLatitude/2) + Math.Sin(deltaLongitude/2) * Math.Sin(deltaLongitude/2) * Math.Cos(toRad(this.latitude)) * Math.Cos(toRad(pointB.latitude));
 				double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1-a));
 
 				return R * c;
