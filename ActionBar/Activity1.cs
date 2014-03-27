@@ -143,6 +143,7 @@ namespace ActionBar
         {
             using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
             {
+                /*
                 TextView[] txt = new TextView[8];
                 String[] txtStr = new String[12];
                 txt[0] = FindViewById<TextView>(Resource.Id.duedate);
@@ -153,54 +154,18 @@ namespace ActionBar
                 txt[5] = FindViewById<TextView>(Resource.Id.iban);
                 txt[6] = FindViewById<TextView>(Resource.Id.bic);
                 txt[7] = FindViewById<TextView>(Resource.Id.reference);
-
-                List<KeyValuePair<String, String>> paymentAttribs = new List<KeyValuePair<String, String>>(13);
+                */
+                Dictionary<String, String> paymentAttribs = new Dictionary<String, String>(13);
 
                 reader.ReadToFollowing("payment");
 
                 for (int i = 0; i < reader.AttributeCount; i++)
                 {
                     reader.MoveToNextAttribute();
-                    paymentAttribs.Add(new KeyValuePair<string, string>(reader.Name, reader.Value));
+                    paymentAttribs.Add(reader.Name, reader.Value);
                 }
 
-                DateTime duedate = new DateTime(1970, 1, 1);
-                Decimal amount = 0.0m;
-                string currency = "EUR";
-                string firmname = "";
-                Address firmaddress = new Address("", 0, 0, "", "");
-                string iban = "";
-                string bic = "";
-                string reference = "";
-                string referencetype = "";
-
-                try
-                {
-                    duedate = Convert.ToDateTime(paymentAttribs.Find(kvp => kvp.Key == "duedate").Value, new CultureInfo("ru-RU"));
-                    amount = Convert.ToDecimal(paymentAttribs.Find(kvp => kvp.Key == "amount").Value);
-                    currency = paymentAttribs.Find(kvp => kvp.Key == "currency").Value;
-                    firmname = paymentAttribs.Find(kvp => kvp.Key == "name").Value;
-                    firmaddress = new Address(paymentAttribs.Find(kvp => kvp.Key == "street").Value, Convert.ToInt32(paymentAttribs.Find(kvp => kvp.Key == "number").Value), Convert.ToInt32(paymentAttribs.Find(kvp => kvp.Key == "zip").Value), paymentAttribs.Find(kvp => kvp.Key == "city").Value, paymentAttribs.Find(kvp => kvp.Key == "country").Value);
-                    iban = paymentAttribs.Find(kvp => kvp.Key == "iban").Value;
-                    bic = paymentAttribs.Find(kvp => kvp.Key == "bic").Value;
-                    reference = paymentAttribs.Find(kvp => kvp.Key == "ref").Value;
-                    referencetype = paymentAttribs.Find(kvp => kvp.Key == "type").Value;
-                }
-                catch (Exception e)
-                {
-
-                }
-
-                Payment newPayment = new Payment();
-
-                try
-                {
-                    newPayment = new Payment(duedate, currency, amount, firmname, firmaddress, iban, bic, reference, referencetype);
-                }
-                catch (Exception e)
-                {
-                    Toast.MakeText(this, e.Message, ToastLength.Long).Show();
-                }
+                Payment newPayment = parseXmlToPayment(paymentAttribs);
 
                 if (newPayment.amount > 1000)
                 {
@@ -211,6 +176,33 @@ namespace ActionBar
                     paymentList.Add(newPayment);
                 }
             }
+        }
+
+        private Payment parseXmlToPayment(Dictionary<String, String> list)
+        {
+            string duedate = "";
+            string amount = "";
+            string currency = "";
+            string firmname = "";
+            string firmaddress = "";
+            string iban = "";
+            string bic = "";
+            string reference = "";
+            string referencetype = "";
+
+            list.TryGetValue("currency", out currency);
+            list.TryGetValue("firmname", out firmname);
+            list.TryGetValue("iban", out iban);
+            list.TryGetValue("bic", out bic);
+            list.TryGetValue("reference", out reference);
+            list.TryGetValue("referencetype", out referencetype);
+            list.TryGetValue("duedate", out duedate);
+            list.TryGetValue("amount", out amount);
+            list.TryGetValue("address", out firmaddress);
+
+            Payment newPayment = new Payment(Convert.ToDateTime(duedate, new CultureInfo("ru-RU")), currency, Convert.ToDecimal(amount), iban, bic, reference, referencetype);
+
+            return newPayment;
         }
 
         private void showLargePaymentPopUp(Payment payment)
