@@ -23,10 +23,11 @@ using System.IO;
 using System.Collections.Generic;
 using System.Globalization;
 using IngHackaton;
+using Android.Content.PM;
 
 namespace ActionBar
 {
-    [Activity(Label = "ActionBar", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "ActionBar", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = ScreenOrientation.Portrait)]
     public class Activity1 : Activity
     {
         private DrawerLayout drawerLayout;
