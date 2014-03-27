@@ -11,12 +11,21 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 		//Class variables
 		List<Payment> paymentList;
 		decimal treshold;
+		string name;
 
-		public Budget(decimal treshold)
+		public Budget(string name, decimal treshold)
 		{
 			paymentList = new List<Payment>();
 			this.resetList();
 			this.treshold = treshold;
+			this.name = name;
+		}
+		public Budget(string name)
+		{
+			paymentList = new List<Payment>();
+			this.resetList();
+			this.treshold = 0.0m;
+			this.name = name;
 		}
 		public void addPayment(Payment payment)
 		{
@@ -32,7 +41,7 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 		}
 		public bool overTreshold()
 		{
-			return getTotalAmount() >= treshold;
+			return treshold==0.0m ? false : getTotalAmount() >= treshold;
 		}
 		public decimal getTotalAmount()
 		{
@@ -42,6 +51,14 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 				total += payment.getAmount();
 			}
 			return total;
+		}
+		public string getName()
+		{
+			return name;
+		}
+		public void setName(string name)
+		{
+			this.name = name;
 		}
 	}
 }
