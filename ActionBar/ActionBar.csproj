@@ -63,18 +63,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account.cs" />
-    <Compile Include="AccountListAdapter.cs" />
+    <Compile Include="Resources\Klasses\Account.cs" />
+    <Compile Include="Resources\Klasses\ListAdapters\AccountListAdapter.cs" />
     <Compile Include="Activity1.cs" />
-    <Compile Include="InfoListItem.cs" />
-    <Compile Include="MyActionBarDrawerToggle.cs" />
-    <Compile Include="InfoListAdapter.cs" />
+    <Compile Include="Resources\Klasses\ListAdapters\InfoListItem.cs" />
+    <Compile Include="Resources\Klasses\GUI\MyActionBarDrawerToggle.cs" />
+    <Compile Include="Resources\Klasses\ListAdapters\InfoListAdapter.cs" />
     <Compile Include="Resources\Klasses\Address.cs" />
     <Compile Include="Resources\Klasses\Budget.cs" />
     <Compile Include="Resources\Klasses\Payment.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SettingsListAdapter.cs" />
+    <Compile Include="Resources\Klasses\ListAdapters\SettingsListAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

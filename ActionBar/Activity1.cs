@@ -189,7 +189,7 @@ namespace ActionBar
             string bic = "";
             string reference = "";
             string referencetype = "";
-
+			
             list.TryGetValue("currency", out currency);
             list.TryGetValue("firmname", out firmname);
             list.TryGetValue("iban", out iban);
@@ -199,9 +199,9 @@ namespace ActionBar
             list.TryGetValue("duedate", out duedate);
             list.TryGetValue("amount", out amount);
             list.TryGetValue("address", out firmaddress);
-
+			
             Payment newPayment = new Payment(Convert.ToDateTime(duedate, new CultureInfo("ru-RU")), currency, Convert.ToDecimal(amount), iban, bic, reference, referencetype);
-
+			
             return newPayment;
         }
 
@@ -310,14 +310,10 @@ namespace ActionBar
                     break;
                 default:
                     break;
-            }
-            
-            //LayoutInflater.Inflate(res, frame);
-            
+            }            
 
             drawerListView.SetItemChecked(position, true);
             drawerLayout.CloseDrawer(drawerListView);
         }
     }
 }
-
