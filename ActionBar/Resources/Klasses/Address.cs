@@ -8,24 +8,24 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 {
 	public class Address
 	{
-		private string firmStreet {get; set;}
-		private int firmNumber {get; set;}
-		private int firmBus {get; set;}
-		private int firmZipCode {get; set;}
-		private string firmCity {get; set;}
-		private string firmCountry {get; set;}
+		private string street {get; set;}
+		private int number {get; set;}
+		private int bus {get; set;}
+		private int zipCode {get; set;}
+		private string city {get; set;}
+		private string country {get; set;}
 		private double latitude {get; set;}		//By convention: "+" for N, "-" for S
 		private double longitude {get; set;}		//By convention: "+" for E, "-" for W
 		private bool coordinatesSet {get; set;}
 
 		public Address(string street, int postalNumber, int bus, int cityCode, string city, string country, int latitude, int longitude)
 		{
-            this.firmStreet = street;
-            this.firmNumber = postalNumber;
-            this.firmBus = bus;
-            this.firmZipCode = cityCode;
-            this.firmCity = city;
-            this.firmCountry = country;
+            this.street = street;
+            this.number = postalNumber;
+            this.bus = bus;
+            this.zipCode = cityCode;
+            this.city = city;
+            this.country = country;
 			this.latitude = latitude;
             this.longitude = longitude;
             this.coordinatesSet = true;
@@ -33,12 +33,12 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 		public Address(string street, int postalNumber, int bus, int cityCode, string city, string country)
 		{
 			//Address(street, postalNumber, bus, cityCode, city, country, 0, 0);
-            this.firmStreet = street;
-            this.firmNumber = postalNumber;
-            this.firmBus = bus;
-            this.firmZipCode = cityCode;
-            this.firmCity = city;
-            this.firmCountry = country;
+            this.street = street;
+            this.number = postalNumber;
+            this.bus = bus;
+            this.zipCode = cityCode;
+            this.city = city;
+            this.country = country;
             this.latitude = 0;
             this.longitude = 0;
             this.coordinatesSet = false;
@@ -46,12 +46,12 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 		public Address(string street, int postalNumber, int cityCode, string city, string country)
 		{
 			//Adress(street, postalNumber, 0, cityCode, city, country, 0, 0);
-            this.firmStreet = street;
-            this.firmNumber = postalNumber;
-            this.firmBus = 0;
-            this.firmZipCode = cityCode;
-            this.firmCity = city;
-            this.firmCountry = country;
+            this.street = street;
+            this.number = postalNumber;
+            this.bus = 0;
+            this.zipCode = cityCode;
+            this.city = city;
+            this.country = country;
             this.latitude = 0;
             this.longitude = 0;
             this.coordinatesSet = false;
@@ -64,7 +64,7 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 		}
 		public string toString()
 		{
-			return firmBus > 0 ? firmStreet + " " + firmNumber + " bus " + firmBus + "\n" + firmZipCode + " " + firmCity + "\n" + firmCountry : firmStreet + " " + firmNumber + "\n" + firmZipCode + " " + firmCity + "\n" + firmCountry;
+			return bus > 0 ? street + " " + number + " bus " + bus + "\n" + zipCode + " " + city + "\n" + country : street + " " + number + "\n" + zipCode + " " + city + "\n" + country;
 		}
 		public double distanceBetween(Address pointB) //Haversine implementation
 		{

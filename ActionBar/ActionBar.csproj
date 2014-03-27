@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Klasses\Account.cs" />
+    <Compile Include="Resources\Klasses\Iban.cs" />
     <Compile Include="Resources\Klasses\ListAdapters\AccountListAdapter.cs" />
     <Compile Include="Activity1.cs" />
     <Compile Include="Resources\Klasses\ListAdapters\InfoListItem.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Resources\Klasses\Address.cs" />
     <Compile Include="Resources\Klasses\Budget.cs" />
     <Compile Include="Resources\Klasses\Payment.cs" />
+    <Compile Include="Resources\Klasses\XmlLogic.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Klasses\ListAdapters\SettingsListAdapter.cs" />
@@ -110,6 +112,9 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\Layout\accountview.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Layout\PaymentDialog.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>
