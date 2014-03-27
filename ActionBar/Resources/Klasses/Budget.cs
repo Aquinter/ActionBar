@@ -24,9 +24,7 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 		}
 		public void removePayment(Payment payment)
 		{
-
-			//Still needs implementation
-			//paymentList.RemoveAt(IndexOf(payment));
+			paymentList.RemoveAt(paymentList.IndexOf(payment));
 		}
 		public void resetList()
 		{
