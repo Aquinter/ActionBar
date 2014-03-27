@@ -44,14 +44,14 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
                 txt[6] = FindViewById<TextView>(Resource.Id.bic);
                 txt[7] = FindViewById<TextView>(Resource.Id.reference);
                 */
-                Dictionary<String, String> paymentAttribs = new Dictionary<String, String>(13);
+				xmlDataList = new Dictionary<String, String>(20);
 
                 reader.ReadToFollowing("payment");
 
                 for (int i = 0; i < reader.AttributeCount; i++)
                 {
                     reader.MoveToNextAttribute();
-                    paymentAttribs.Add(reader.Name, reader.Value);
+					xmlDataList.Add(reader.Name, reader.Value);
                 }
             }
         }
@@ -81,7 +81,8 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 			xmlDataList.TryGetValue("md5hash", out md5hash);
 
             string stringToHash = duedate + amount + currency + firmname + firmaddress + iban + bic + reference + referencetype;
-            if (validateXml(stringToHash))
+			Console.WriteLine (stringToHash);
+			if (validateXml(stringToHash))
             {
             	Payment newPayment = new Payment(Convert.ToDateTime(duedate, new CultureInfo("ru-RU")), currency, Convert.ToDecimal(amount), iban, bic, reference, referencetype);
             	return newPayment;
