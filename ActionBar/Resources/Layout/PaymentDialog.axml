@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:paddingTop="5dp"
+    android:paddingLeft="5dp">
     <TableLayout
         android:minWidth="25px"
         android:minHeight="25px"
@@ -62,6 +64,11 @@
         </TableRow>
         <TableRow
             android:id="@+id/tableRow4">
+            <TextView
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
+                android:id="@+id/textView31" />
             <TextView
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_column="1"

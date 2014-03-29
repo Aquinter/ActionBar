@@ -11,7 +11,7 @@ using Android.Views;
 using Android.Widget;
 using Android.Graphics.Drawables;
 
-namespace ActionBar
+namespace com.ingenious.android
 {
     class InfoListItem
     {

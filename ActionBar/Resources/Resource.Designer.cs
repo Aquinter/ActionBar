@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("ActionBar.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("com.ingenious.android.Resource", IsApplication=true)]
 
-namespace ActionBar
+namespace com.ingenious.android
 {
 	
 	
@@ -26,9 +26,9 @@ namespace ActionBar
 		
 		public static void UpdateIdValues()
 		{
-			global::ZXing.Mobile.Resource.Id.contentFrame = global::ActionBar.Resource.Id.contentFrame;
-			global::ZXing.Mobile.Resource.Layout.zxingscanneractivitylayout = global::ActionBar.Resource.Layout.zxingscanneractivitylayout;
-			global::ZXing.Mobile.Resource.Layout.zxingscannerfragmentlayout = global::ActionBar.Resource.Layout.zxingscannerfragmentlayout;
+			global::ZXing.Mobile.Resource.Id.contentFrame = global::com.ingenious.android.Resource.Id.contentFrame;
+			global::ZXing.Mobile.Resource.Layout.zxingscanneractivitylayout = global::com.ingenious.android.Resource.Layout.zxingscanneractivitylayout;
+			global::ZXing.Mobile.Resource.Layout.zxingscannerfragmentlayout = global::com.ingenious.android.Resource.Layout.zxingscannerfragmentlayout;
 		}
 		
 		public partial class Attribute
@@ -127,17 +127,20 @@ namespace ActionBar
 			// aapt resource value: 0x7f070005
 			public const int amountTxt = 2131165189;
 			
-			// aapt resource value: 0x7f070023
-			public const int bic = 2131165219;
-			
-			// aapt resource value: 0x7f070027
-			public const int button1 = 2131165223;
-			
-			// aapt resource value: 0x7f070028
-			public const int button2 = 2131165224;
-			
 			// aapt resource value: 0x7f070029
-			public const int contentFrame = 2131165225;
+			public const int amountValue = 2131165225;
+			
+			// aapt resource value: 0x7f070024
+			public const int bic = 2131165220;
+			
+			// aapt resource value: 0x7f07002a
+			public const int button1 = 2131165226;
+			
+			// aapt resource value: 0x7f07002b
+			public const int button2 = 2131165227;
+			
+			// aapt resource value: 0x7f07002c
+			public const int contentFrame = 2131165228;
 			
 			// aapt resource value: 0x7f07000d
 			public const int content_frame = 2131165197;
@@ -151,14 +154,14 @@ namespace ActionBar
 			// aapt resource value: 0x7f07001b
 			public const int firmaddress1 = 2131165211;
 			
-			// aapt resource value: 0x7f07001d
-			public const int firmaddress2 = 2131165213;
+			// aapt resource value: 0x7f07001e
+			public const int firmaddress2 = 2131165214;
 			
 			// aapt resource value: 0x7f070018
 			public const int firmname = 2131165208;
 			
-			// aapt resource value: 0x7f070020
-			public const int iban = 2131165216;
+			// aapt resource value: 0x7f070021
+			public const int iban = 2131165217;
 			
 			// aapt resource value: 0x7f070003
 			public const int ibanTxt = 2131165187;
@@ -184,8 +187,8 @@ namespace ActionBar
 			// aapt resource value: 0x7f070001
 			public const int primary_target = 2131165185;
 			
-			// aapt resource value: 0x7f070026
-			public const int reference = 2131165222;
+			// aapt resource value: 0x7f070027
+			public const int reference = 2131165223;
 			
 			// aapt resource value: 0x7f07000f
 			public const int tableLayout1 = 2131165199;
@@ -205,14 +208,14 @@ namespace ActionBar
 			// aapt resource value: 0x7f070019
 			public const int tableRow5 = 2131165209;
 			
-			// aapt resource value: 0x7f07001e
-			public const int tableRow6 = 2131165214;
+			// aapt resource value: 0x7f07001f
+			public const int tableRow6 = 2131165215;
 			
-			// aapt resource value: 0x7f070021
-			public const int tableRow7 = 2131165217;
+			// aapt resource value: 0x7f070022
+			public const int tableRow7 = 2131165218;
 			
-			// aapt resource value: 0x7f070024
-			public const int tableRow9 = 2131165220;
+			// aapt resource value: 0x7f070025
+			public const int tableRow9 = 2131165221;
 			
 			// aapt resource value: 0x7f07000a
 			public const int text1 = 2131165194;
@@ -235,14 +238,20 @@ namespace ActionBar
 			// aapt resource value: 0x7f07001a
 			public const int textView17 = 2131165210;
 			
-			// aapt resource value: 0x7f07001f
-			public const int textView22 = 2131165215;
+			// aapt resource value: 0x7f070020
+			public const int textView22 = 2131165216;
 			
-			// aapt resource value: 0x7f070022
-			public const int textView29 = 2131165218;
+			// aapt resource value: 0x7f070023
+			public const int textView29 = 2131165219;
 			
-			// aapt resource value: 0x7f070025
-			public const int textView30 = 2131165221;
+			// aapt resource value: 0x7f070028
+			public const int textView3 = 2131165224;
+			
+			// aapt resource value: 0x7f070026
+			public const int textView30 = 2131165222;
+			
+			// aapt resource value: 0x7f07001d
+			public const int textView31 = 2131165213;
 			
 			static Id()
 			{
@@ -294,13 +303,16 @@ namespace ActionBar
 			public const int PaymentDialog = 2130903051;
 			
 			// aapt resource value: 0x7f03000c
-			public const int transfers = 2130903052;
+			public const int setamount = 2130903052;
 			
 			// aapt resource value: 0x7f03000d
-			public const int zxingscanneractivitylayout = 2130903053;
+			public const int transfers = 2130903053;
 			
 			// aapt resource value: 0x7f03000e
-			public const int zxingscannerfragmentlayout = 2130903054;
+			public const int zxingscanneractivitylayout = 2130903054;
+			
+			// aapt resource value: 0x7f03000f
+			public const int zxingscannerfragmentlayout = 2130903055;
 			
 			static Layout()
 			{

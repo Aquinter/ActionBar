@@ -10,7 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace ActionBar
+namespace com.ingenious.android
 {
     class AccountListAdapter : BaseAdapter
     {
