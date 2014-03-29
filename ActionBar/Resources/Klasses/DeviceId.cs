@@ -1,3 +1,6 @@
+//Obsolete
+
+/*
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,3 +36,4 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 		}	
 	}
 }
+*/
