@@ -9,6 +9,7 @@ namespace IngHackaton
     public class Payment
     {
         public DateTime dueDate;
+        public string dueDateStr;
         public Decimal amount;
         public string currency;
         public string firmName;
@@ -25,6 +26,7 @@ namespace IngHackaton
         public Payment(DateTime dueDate, string currency, Decimal amount, string firmName, Address address, string iban, string bic, string reference, string referenceStructured)
         {
             this.dueDate = dueDate;
+            this.dueDateStr = dueDate.ToString().Substring(0, dueDate.ToString().IndexOf(" "));
             this.amount = amount;
             this.currency = currency;
             this.firmName = firmName;
@@ -37,6 +39,7 @@ namespace IngHackaton
         public Payment(DateTime dueDate, string currency, Decimal amount, string iban, string bic, string reference, string referenceStructured)
         {
             this.dueDate = dueDate;
+            this.dueDateStr = dueDate.ToString().Substring(0, dueDate.ToString().IndexOf(" "));
             this.amount = amount;
             this.currency = currency;
             this.firmName = "";

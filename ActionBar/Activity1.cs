@@ -1,6 +1,4 @@
-﻿#define ANDROID
-
-using System;
+﻿using System;
 
 using Android.App;
 using Android.Content;
@@ -29,6 +27,8 @@ using Android.Content.PM;
 using Android.Telephony;
 using Java.Util;
 
+using Aping;
+
 namespace com.ingenious.android
 {
     [Activity(Label = "ING Mobile Banking", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = ScreenOrientation.Portrait)]
@@ -39,7 +39,8 @@ namespace com.ingenious.android
         private ListView drawerListView;
         private String[] drawerList = { "Mobile Banking", "Info", "Settings" };
         private List<Payment> paymentList = new List<Payment>();
-        
+        private ApIng myAping = new ApIng("DA02vQ9zQJTy0aDnSp0Do2mc8LTY8o1a", "2904561Y", "1/01/1980");
+
         /*
          * OnCreate is called when app is started (equivalent to main in ordinary C#)
          */
@@ -186,6 +187,23 @@ namespace com.ingenious.android
                     .SetPositiveButton("OK", (s1, ev) =>
                     {
                         paymentList.Add(newPayment);
+
+                        // execute payment
+
+                        MoneyTransfer toTransfer = new MoneyTransfer();
+                        toTransfer.from = new Aping.From { productNumber = "14650100911708338200" };
+                        toTransfer.to = new Aping.To { productNumber = newPayment.iban, titular = newPayment.firmName };
+                        toTransfer.currency = newPayment.currency;
+                        toTransfer.operationDate = newPayment.dueDateStr;
+                        toTransfer.concept = newPayment.reference;
+                        toTransfer.amount = (double)newPayment.amount;
+
+                        ConfirmationOfTransfer fullPayment = myAping.EasyTransfer(toTransfer, "1,1");
+
+                        myAping.LogOut();
+                        //end payment execution
+
+
                     })
                     .SetNegativeButton("Cancel", (s1, ev) =>
                     {
@@ -288,7 +306,7 @@ namespace com.ingenious.android
             list.TryGetValue("type", out referenceType);
             list.TryGetValue("id", out id);
             
-            return new Payment(Convert.ToDateTime(dueDate, new CultureInfo("ru-RU")), currency, Convert.ToDecimal(amount), firmName, new Address(firmStreet, Convert.ToInt32(firmNumber), Convert.ToInt32(firmBus), Convert.ToInt32(firmZipCode), firmCity, firmCountry),iban, bic, reference, referenceType);
+            return new Payment(Convert.ToDateTime(dueDate, new CultureInfo("ru-RU")), currency, Convert.ToDecimal(amount), firmName, new IngHackaton.Address(firmStreet, Convert.ToInt32(firmNumber), Convert.ToInt32(firmBus), Convert.ToInt32(firmZipCode), firmCity, firmCountry),iban, bic, reference, referenceType);
         }
 
         private void showLargePaymentPopUp(Payment payment)

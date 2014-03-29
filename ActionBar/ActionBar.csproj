@@ -48,6 +48,9 @@
   <ItemGroup>
     <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
+    <Reference Include="RestSharp.MonoDroid">
+      <HintPath>..\Components\restsharp-104.1.0\lib\android\RestSharp.MonoDroid.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,9 +67,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Klasses\Account.cs" />
-    <Compile Include="Resources\Klasses\DeviceId.cs" />
+    <Compile Include="Resources\Klasses\ApIng.cs" />
     <Compile Include="Resources\Klasses\GUI\SimpleDialogManager_iOS.cs" />
     <Compile Include="Resources\Klasses\Iban.cs" />
+    <Compile Include="Resources\Klasses\JsonContainerClasses\AcceptanceValue.cs" />
+    <Compile Include="Resources\Klasses\JsonContainerClasses\ConfirmationOfTransfer.cs" />
+    <Compile Include="Resources\Klasses\JsonContainerClasses\Customer.cs" />
+    <Compile Include="Resources\Klasses\JsonContainerClasses\CustomerContract.cs" />
+    <Compile Include="Resources\Klasses\JsonContainerClasses\CustomerFinancialInformation.cs" />
+    <Compile Include="Resources\Klasses\JsonContainerClasses\LoginBody.cs" />
+    <Compile Include="Resources\Klasses\JsonContainerClasses\MoneyTransfer.cs" />
+    <Compile Include="Resources\Klasses\JsonContainerClasses\PrepareForTransfer.cs" />
+    <Compile Include="Resources\Klasses\JsonContainerClasses\ProductsList.cs" />
+    <Compile Include="Resources\Klasses\JsonContainerClasses\TicketResponse.cs" />
+    <Compile Include="Resources\Klasses\JsonContainerClasses\UpdateTransfer.cs" />
     <Compile Include="Resources\Klasses\ListAdapters\AccountListAdapter.cs" />
     <Compile Include="Activity1.cs" />
     <Compile Include="Resources\Klasses\ListAdapters\InfoListItem.cs" />
@@ -165,6 +179,10 @@
     <AndroidResource Include="Resources\Drawable-mdpi\ic_account_options.png" />
   </ItemGroup>
   <ItemGroup>
+    <XamarinComponentReference Include="restsharp">
+      <Visible>False</Visible>
+      <Version>104.1.0</Version>
+    </XamarinComponentReference>
     <XamarinComponentReference Include="xamandroidsupportv4-18">
       <Visible>False</Visible>
       <Version>4.19.0.1</Version>
