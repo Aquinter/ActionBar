@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define ANDROID
+
+using System;
 
 using Android.App;
 using Android.Content;
@@ -24,6 +26,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using IngHackaton;
 using Android.Content.PM;
+using Android.Telephony;
+using Java.Util;
 
 namespace com.ingenious.android
 {
@@ -80,7 +84,6 @@ namespace com.ingenious.android
             ActionBar.NavigationMode = ActionBarNavigationMode.Tabs;
 
             AddTabToActionBar(Resource.String.title_section1);
-            AddTabToActionBar(Resource.String.title_section2);
             AddTabToActionBar(Resource.String.title_section3);
         }
 
@@ -117,9 +120,6 @@ namespace com.ingenious.android
                     contentListView.Adapter = new AccountListAdapter(this);
                     break;
                 case 1:
-                    LayoutInflater.Inflate(Resource.Layout.credits, frame);
-                    break;
-                case 2:
                     LayoutInflater.Inflate(Resource.Layout.transfers, frame);
                     Button btn = FindViewById<Button>(Resource.Id.button1);
                     btn.Click += async delegate
@@ -149,6 +149,8 @@ namespace com.ingenious.android
                 LayoutInflater inflater = this.LayoutInflater;
                 View view = inflater.Inflate(Resource.Layout.PaymentDialog, null);
 
+                
+                /*
                 TextView[] txt = new TextView[8];
                 txt[0] = view.FindViewById<TextView>(Resource.Id.duedate);
                 txt[1] = view.FindViewById<TextView>(Resource.Id.amount);
@@ -158,7 +160,7 @@ namespace com.ingenious.android
                 txt[5] = view.FindViewById<TextView>(Resource.Id.iban);
                 txt[6] = view.FindViewById<TextView>(Resource.Id.bic);
                 txt[7] = view.FindViewById<TextView>(Resource.Id.reference);
-                
+                */
                 Dictionary<String, String> paymentAttribs = new Dictionary<String, String>(20);
 
                 reader.ReadToFollowing("payment");
@@ -189,8 +191,40 @@ namespace com.ingenious.android
                     {
 
                     });
-                builder.Show();
+
+                if (newPayment.amount <= 0.0m)
+                {
+
+                    AlertDialog.Builder builder3 = new AlertDialog.Builder(this);
+                    builder3.SetTitle("Enter amount");
+                    LayoutInflater inflater3 = this.LayoutInflater;
+                    View view3 = inflater.Inflate(Resource.Layout.setamount, null);
+
+                    builder3.SetView(view3)
+                    .SetPositiveButton("OK", (s3, ev3) =>
+                    {
+                        newPayment.amount = Convert.ToDecimal(view3.FindViewById<EditText>(Resource.Id.amountValue).Text);
+                        //paymentList.Add(newPayment);
+                        setAmountInfo(view, newPayment);
+                        builder.Show();
+                    })
+                    .SetNegativeButton("Cancel", (s1, ev) =>
+                    {
+
+                    });
+
+                    builder3.Show();
+
+                }
+                else
+                {
+                    setAmountInfo(view, newPayment);
+                    builder.Show();
+                }
+
                 
+                
+                /*
                 txt[0].Text = newPayment.dueDate.ToString();
                 txt[1].Text = newPayment.currency + " " + newPayment.amount.ToString();
                 txt[2].Text = newPayment.firmName;
@@ -199,7 +233,25 @@ namespace com.ingenious.android
                 txt[5].Text = newPayment.iban;
                 txt[6].Text = newPayment.bic;
                 txt[7].Text = newPayment.reference;
+                 * */
+                //DeviceId devID = new DeviceId();
+                //view.FindViewById<TextView>(Resource.Id.textView31).Text = devID.getDeviceId();
+                //txt[8].Text = devID.getDeviceId();
             }
+        }
+
+        public void setAmountInfo(View view, Payment newPayment)
+        {
+            view.FindViewById<TextView>(Resource.Id.duedate).Text = newPayment.dueDate.ToString();
+            view.FindViewById<TextView>(Resource.Id.amount).Text = newPayment.currency + " " + newPayment.amount.ToString();
+            view.FindViewById<TextView>(Resource.Id.firmname).Text = newPayment.firmName;
+            view.FindViewById<TextView>(Resource.Id.firmaddress1).Text = newPayment.address.toString();
+            view.FindViewById<TextView>(Resource.Id.firmaddress2).Text = "";
+            view.FindViewById<TextView>(Resource.Id.iban).Text = newPayment.iban;
+            view.FindViewById<TextView>(Resource.Id.bic).Text = newPayment.bic;
+            view.FindViewById<TextView>(Resource.Id.reference).Text = newPayment.reference;
+
+            //view.FindViewById<TextView>(Resource.Id.textView31).Text = ((TelephonyManager)this.GetSystemService(TelephonyService)).DeviceId.ToString();
         }
 
         private Payment parseXmlToPayment(Dictionary<String, String> list)
@@ -218,6 +270,7 @@ namespace com.ingenious.android
             string bic = "";
             string reference = "";
             string referenceType = "";
+            string id = "";
 
             list.TryGetValue("duedate", out dueDate);
             list.TryGetValue("currency", out currency);
@@ -233,6 +286,7 @@ namespace com.ingenious.android
             list.TryGetValue("bic", out bic);
             list.TryGetValue("ref", out reference);
             list.TryGetValue("type", out referenceType);
+            list.TryGetValue("id", out id);
             
             return new Payment(Convert.ToDateTime(dueDate, new CultureInfo("ru-RU")), currency, Convert.ToDecimal(amount), firmName, new Address(firmStreet, Convert.ToInt32(firmNumber), Convert.ToInt32(firmBus), Convert.ToInt32(firmZipCode), firmCity, firmCountry),iban, bic, reference, referenceType);
         }

@@ -64,6 +64,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Klasses\Account.cs" />
+    <Compile Include="Resources\Klasses\DeviceId.cs" />
+    <Compile Include="Resources\Klasses\GUI\SimpleDialogManager_iOS.cs" />
     <Compile Include="Resources\Klasses\Iban.cs" />
     <Compile Include="Resources\Klasses\ListAdapters\AccountListAdapter.cs" />
     <Compile Include="Activity1.cs" />
@@ -115,6 +117,9 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\Layout\PaymentDialog.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\Layout\setamount.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>

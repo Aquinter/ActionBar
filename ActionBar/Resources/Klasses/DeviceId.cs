@@ -1,3 +1,8 @@
+#if (ANDROID)
+using Android.Content;
+using Android.Telephony;
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +13,11 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 {
 	public class DeviceId
 	{
-		string deviceId;
+		string deviceId = "ID here";
+#if (ANDROID)
+        Context c;
+#endif
+
 		public DeviceId()
 		{
 			#if(IOS)
