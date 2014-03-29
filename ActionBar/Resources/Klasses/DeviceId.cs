@@ -19,6 +19,11 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 
 			#if(ANDROID)
 				//Implementation for getting the IMEI (or other fixed code)
+
+				//Nick: kan je dit eens testen aub?
+				var telephonyManager = (TelephonyManager) GetSystemService(TelephonyService);
+				var id = telephonyManager.DeviceId;
+				deviceId = id.ToString();
 			#endif
 		}	
 	}
