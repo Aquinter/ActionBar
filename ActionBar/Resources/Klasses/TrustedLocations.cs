@@ -13,7 +13,7 @@ namespace IngHackaton
 
 		public int isTrusted(Coordinate coordinateToCheck)
 		{
-			int current = 5;
+   int current = 4;
 
 			foreach (Perimeter perimeter in trustedLocations)
 			{

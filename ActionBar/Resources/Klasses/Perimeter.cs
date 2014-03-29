@@ -40,7 +40,7 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 			} 
 			else
 			{
-				return 4;
+				return 3;
 			}
 
 		}
