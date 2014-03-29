@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IngHackaton //Moet maar aangepast worden voor het project
 {
-	public class DeviceId()
+	public class DeviceId
 	{
 		string deviceId;
 		public DeviceId()
@@ -25,6 +25,11 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 				var id = telephonyManager.DeviceId;
 				deviceId = id.ToString();
 			#endif
+		}
+
+		public string getDeviceId()
+		{
+			return deviceId;
 		}	
 	}
 }
