@@ -25,15 +25,15 @@ using System.Globalization;
 using IngHackaton;
 using Android.Content.PM;
 
-namespace ActionBar
+namespace com.ingenious.android
 {
-    [Activity(Label = "ActionBar", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "ING Mobile Banking", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = ScreenOrientation.Portrait)]
     public class Activity1 : Activity
     {
         private DrawerLayout drawerLayout;
         private MyActionBarDrawerToggle drawerToggle;
         private ListView drawerListView;
-        private String[] drawerList = { "Mobile Banking", "Branches", "Contact", "Appointment", "Info", "Settings" };
+        private String[] drawerList = { "Mobile Banking", "Info", "Settings" };
         private List<Payment> paymentList = new List<Payment>();
         
         /*
@@ -317,24 +317,12 @@ namespace ActionBar
                     addMobileBankingTabs();
                     break;
                 case 1:
-                    LayoutInflater.Inflate(Resource.Layout.branches, frame);
-                    removeAllTabs();
-                    break;
-                case 2:
-                    LayoutInflater.Inflate(Resource.Layout.contact, frame);
-                    removeAllTabs();
-                    break;
-                case 3:
-                    LayoutInflater.Inflate(Resource.Layout.appointment, frame);
-                    removeAllTabs();
-                    break;
-                case 4:
                     LayoutInflater.Inflate(Resource.Layout.List, frame);
                     removeAllTabs();
                     ListView contentListView = FindViewById<ListView>(Resource.Id.activity_list);
                     contentListView.Adapter = new InfoListAdapter(this);
                     break;
-                case 5:
+                case 2:
                     LayoutInflater.Inflate(Resource.Layout.List, frame);
                     removeAllTabs();
                     ListView contentListView2 = FindViewById<ListView>(Resource.Id.activity_list);
