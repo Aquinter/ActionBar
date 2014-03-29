@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MonoTouch.UIKit;
 
 namespace IngHackaton //Moet maar aangepast worden voor het project
 {
@@ -10,9 +11,9 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 	{
 		UIAlertView dialog;
 
-		public DialogMnager(string title, string content, firstButton, secondButton)
+		public DialogManager(string title, string content, string firstButton, string secondButton)
 		{
-			new UIAlertView(title, content, null, firstButton, secondButton);
+			dialog = new UIAlertView(title, content, null, firstButton, secondButton);
 		}
 
 		public void Show()
