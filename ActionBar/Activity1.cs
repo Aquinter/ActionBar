@@ -40,6 +40,7 @@ namespace com.ingenious.android
         private String[] drawerList = { "Mobile Banking", "Info", "Settings" };
         private List<Payment> paymentList = new List<Payment>();
         private ApIng myAping = new ApIng("DA02vQ9zQJTy0aDnSp0Do2mc8LTY8o1a", "2904561Y", "1/01/1980");
+        private string pinCode = "654321";
 
         /*
          * OnCreate is called when app is started (equivalent to main in ordinary C#)
@@ -186,7 +187,11 @@ namespace com.ingenious.android
                 builder.SetView(view)
                     .SetPositiveButton("OK", (s1, ev) =>
                     {
-                        paymentList.Add(newPayment);
+                        //Comfirm payment dialog
+
+
+
+                        //paymentList.Add(newPayment);
 
                         // execute payment
 
@@ -198,11 +203,50 @@ namespace com.ingenious.android
                         toTransfer.concept = newPayment.reference;
                         toTransfer.amount = (double)newPayment.amount;
 
-                        ConfirmationOfTransfer fullPayment = myAping.EasyTransfer(toTransfer, "1,1");
+                        /*
+                         * 
+                         * PIN code confirmation
+                         * 
+                         */
+                        
+                        AlertDialog.Builder builder4 = new AlertDialog.Builder(this);
+                        builder4.SetTitle("Enter PIN");
+                        LayoutInflater inflater4 = this.LayoutInflater;
+                        View view4 = inflater4.Inflate(Resource.Layout.setamount, null);
 
-                        myAping.LogOut();
+                        TextView nameTxt = view4.FindViewById<TextView>(Resource.Id.textView3);
+                        EditText pinTxt = view4.FindViewById<EditText>(Resource.Id.amountValue);
+                        nameTxt.Text = "Pin: ";
+
+                        builder4.SetView(view4)
+                        .SetPositiveButton("OK", (s4, ev4) =>
+                        {
+                            // Enter pin dialog
+
+                            if (pinTxt.Text.Equals(pinCode))
+                            {
+                                int auth = performAuthentication();
+                                bool performPayment = auth >= 0 && auth < 3;
+
+                                if (performPayment)
+                                {
+                                    ConfirmationOfTransfer fullPayment = myAping.EasyTransfer(toTransfer, "1,1");
+                                    Toast.MakeText(this, "performPayment: " + performPayment.ToString() + "\n" + fullPayment.ToString() + "\nAuth:" + auth.ToString(), ToastLength.Long).Show();
+                                }
+                                else
+                                    Toast.MakeText(this, "performPayment: " + performPayment.ToString() + "\n No payment done\nAuth:" + auth.ToString(), ToastLength.Long).Show();
+                            }
+                             
+                        })
+                        .SetNegativeButton("Cancel", (s5, ev5) =>
+                        {
+
+                        });
+
+                        builder4.Show();
+                        
+                        
                         //end payment execution
-
 
                     })
                     .SetNegativeButton("Cancel", (s1, ev) =>
@@ -221,6 +265,9 @@ namespace com.ingenious.android
                     builder3.SetView(view3)
                     .SetPositiveButton("OK", (s3, ev3) =>
                     {
+                        // Enter amount dialog
+
+
                         newPayment.amount = Convert.ToDecimal(view3.FindViewById<EditText>(Resource.Id.amountValue).Text);
                         //paymentList.Add(newPayment);
                         setAmountInfo(view, newPayment);
@@ -239,24 +286,76 @@ namespace com.ingenious.android
                     setAmountInfo(view, newPayment);
                     builder.Show();
                 }
+            }
 
-                
-                
-                /*
-                txt[0].Text = newPayment.dueDate.ToString();
-                txt[1].Text = newPayment.currency + " " + newPayment.amount.ToString();
-                txt[2].Text = newPayment.firmName;
-                txt[3].Text = newPayment.address.toString();
-                txt[4].Text = "";
-                txt[5].Text = newPayment.iban;
-                txt[6].Text = newPayment.bic;
-                txt[7].Text = newPayment.reference;
-                 * */
-                //DeviceId devID = new DeviceId();
-                //view.FindViewById<TextView>(Resource.Id.textView31).Text = devID.getDeviceId();
-                //txt[8].Text = devID.getDeviceId();
+            myAping.LogOut();
+        }
+
+        public int performAuthentication()
+        {
+            /*-1 = undefined error
+             * 0 = Home perimeter
+             * 1 = Public perimeter, FR passed
+             * 2 = Public perimeter, FR failed
+             * 3 = Forbidden perimeter
+             * 4 = perimeter error
+             * 5 = no perimeters defined
+             * 6 = PIN wrong
+             */
+
+            
+
+            return checkPerimeter();
+        }
+
+        public int checkPerimeter()
+        {
+            /*-1 = undefined error
+             * 0 = Home perimeter
+             * 1 = Public perimeter, FR passed
+             * 2 = Public perimeter, FR failed
+             * 3 = Forbidden perimeter
+             * 4 = perimeter error
+             * 5 = no perimeters defined
+             */
+
+            double lat = 50.2058;
+            double lon = 8.02521;
+
+            Coordinate coord = new Coordinate(lat, lon);
+            Perimeter perimeter = new Perimeter(coord, 200.0, 5000.0);
+
+            int perimeterRating = perimeter.getZoneRating(coord); //should return 0;
+
+            switch (perimeterRating)
+            {
+                case 0:
+                    // Home perimeter
+                    return 0;
+                case 1:
+                    // Public perimeter
+                    return faceRecognition() ? 1 : 2;
+                case 2:
+                    // Forbidden perimeter
+                    return 3;
+                case 3:
+                    // Perimeter error
+                    return 4;
+                case 4:
+                    // No perimeter defined, send to settings, no payment
+                    return 5;
+                default:
+                    return -1;
             }
         }
+
+        public bool faceRecognition()
+        {
+            return true;
+        }
+
+
+
 
         public void setAmountInfo(View view, Payment newPayment)
         {

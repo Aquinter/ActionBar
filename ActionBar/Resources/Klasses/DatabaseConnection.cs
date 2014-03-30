@@ -1,13 +1,10 @@
 using System;
 using System.Drawing;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 //using Mono.Data.Sqlite;
 //using System.Data;
-using System.Data.SqlClient;
 
 namespace IngHackaton //Moet maar aangepast worden voor het project
 {

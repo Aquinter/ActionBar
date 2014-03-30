@@ -68,6 +68,8 @@
   <ItemGroup>
     <Compile Include="Resources\Klasses\Account.cs" />
     <Compile Include="Resources\Klasses\ApIng.cs" />
+    <Compile Include="Resources\Klasses\Coordinate.cs" />
+    <Compile Include="Resources\Klasses\DatabaseConnection.cs" />
     <Compile Include="Resources\Klasses\GUI\SimpleDialogManager_iOS.cs" />
     <Compile Include="Resources\Klasses\Iban.cs" />
     <Compile Include="Resources\Klasses\JsonContainerClasses\AcceptanceValue.cs" />
@@ -89,6 +91,8 @@
     <Compile Include="Resources\Klasses\Address.cs" />
     <Compile Include="Resources\Klasses\Budget.cs" />
     <Compile Include="Resources\Klasses\Payment.cs" />
+    <Compile Include="Resources\Klasses\Perimeter.cs" />
+    <Compile Include="Resources\Klasses\TrustedLocations.cs" />
     <Compile Include="Resources\Klasses\XmlLogic.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
