@@ -39,8 +39,9 @@ namespace com.ingenious.android
         private ListView drawerListView;
         private String[] drawerList = { "Mobile Banking", "Info", "Settings" };
         private List<Payment> paymentList = new List<Payment>();
-        private ApIng myAping = new ApIng("DA02vQ9zQJTy0aDnSp0Do2mc8LTY8o1a", "2904561Y", "1/01/1980");
-        private string pinCode = "654321";
+        //private ApIng myAping = new ApIng("DA02vQ9zQJTy0aDnSp0Do2mc8LTY8o1a", "2904561Y", "1/01/1980");
+        public MoneyTransfer toTransfer;
+        private string pinCode = "1";
 
         /*
          * OnCreate is called when app is started (equivalent to main in ordinary C#)
@@ -133,7 +134,22 @@ namespace com.ingenious.android
                     Button btn2 = FindViewById<Button>(Resource.Id.button2);
                     btn2.Click += delegate
                     {
-                        toastQueue();
+                        //toastQueue();
+                        /*
+                        MoneyTransfer toTransfer = new MoneyTransfer();
+                        toTransfer.from = new Aping.From { productNumber = "14650100911708338200" };
+                        toTransfer.to = new Aping.To { productNumber = "14650100932025956187", titular = "PEPE PEREZ PEREZ" };
+                        toTransfer.currency = "EUR";
+                        toTransfer.operationDate = "30/03/2014";
+                        toTransfer.concept = "this is a first test";
+                        toTransfer.amount = 100.5d;
+                        //UpdateTransfer toTest6 = myAping.requestUpdateTransfer(ToTest5.id, toTransfer);
+                        //ConfirmationOfTransfer toTest7 = myAping.requestConfirmationOfTransfer("1,1", ToTest5.id);
+                        ConfirmationOfTransfer fullPayment = myAping.EasyTransfer(toTransfer, "1,1");
+                        //MessageBox.Show(fullPayment.ToString());
+                        Toast.MakeText(this, fullPayment.ToString(), ToastLength.Long).Show();
+                        myAping.LogOut();
+                         * */
                     };
                     break;
                 default:
@@ -195,14 +211,15 @@ namespace com.ingenious.android
 
                         // execute payment
 
-                        MoneyTransfer toTransfer = new MoneyTransfer();
+                        
+                        toTransfer = new MoneyTransfer();
                         toTransfer.from = new Aping.From { productNumber = "14650100911708338200" };
                         toTransfer.to = new Aping.To { productNumber = newPayment.iban, titular = newPayment.firmName };
                         toTransfer.currency = newPayment.currency;
-                        toTransfer.operationDate = newPayment.dueDateStr;
+                        toTransfer.operationDate = "30/03/2014";
                         toTransfer.concept = newPayment.reference;
                         toTransfer.amount = (double)newPayment.amount;
-
+                        
                         /*
                          * 
                          * PIN code confirmation
@@ -228,13 +245,24 @@ namespace com.ingenious.android
                                 int auth = performAuthentication();
                                 bool performPayment = auth >= 0 && auth < 3;
 
-                                if (performPayment)
+                                try
                                 {
-                                    ConfirmationOfTransfer fullPayment = myAping.EasyTransfer(toTransfer, "1,1");
-                                    Toast.MakeText(this, "performPayment: " + performPayment.ToString() + "\n" + fullPayment.ToString() + "\nAuth:" + auth.ToString(), ToastLength.Long).Show();
+                                    if (performPayment)
+                                    {
+                                        ApIng myAping = new ApIng("DA02vQ9zQJTy0aDnSp0Do2mc8LTY8o1a", "2904561Y", "1/01/1980");
+
+                                        ConfirmationOfTransfer fullPayment = myAping.EasyTransfer(toTransfer, "1,1");
+                                        Toast.MakeText(this, "performPayment: " + performPayment.ToString() + "\n" + fullPayment.ToString() + "\nAuth:" + auth.ToString(), ToastLength.Long).Show();
+                                        myAping.LogOut();
+                                    }
+                                    else
+                                        Toast.MakeText(this, "performPayment: " + performPayment.ToString() + "\n No payment done\nAuth:" + auth.ToString(), ToastLength.Long).Show();
+                                     
                                 }
-                                else
-                                    Toast.MakeText(this, "performPayment: " + performPayment.ToString() + "\n No payment done\nAuth:" + auth.ToString(), ToastLength.Long).Show();
+                                catch (Exception e)
+                                {
+                                    Toast.MakeText(this, e.Message.ToString(), ToastLength.Long).Show();
+                                }
                             }
                              
                         })
@@ -267,7 +295,6 @@ namespace com.ingenious.android
                     {
                         // Enter amount dialog
 
-
                         newPayment.amount = Convert.ToDecimal(view3.FindViewById<EditText>(Resource.Id.amountValue).Text);
                         //paymentList.Add(newPayment);
                         setAmountInfo(view, newPayment);
@@ -288,7 +315,7 @@ namespace com.ingenious.android
                 }
             }
 
-            myAping.LogOut();
+            
         }
 
         public int performAuthentication()
@@ -323,7 +350,7 @@ namespace com.ingenious.android
             double lon = 8.02521;
 
             Coordinate coord = new Coordinate(lat, lon);
-            Perimeter perimeter = new Perimeter(coord, 200.0, 5000.0);
+            Perimeter perimeter = new Perimeter(coord, 200, 5000);
 
             int perimeterRating = perimeter.getZoneRating(coord); //should return 0;
 

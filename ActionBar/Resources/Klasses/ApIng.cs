@@ -129,7 +129,15 @@ namespace Aping
             request.Resource = "openapi/rest/transfers?apikey=" + apiKey;
             request.RequestFormat = DataFormat.Json;
             var response = restClient.Execute(request);
-            var result = jsonDeserializer.Deserialize<PrepareForTransfer>(response);
+            PrepareForTransfer result;
+            try
+            {
+                result = jsonDeserializer.Deserialize<PrepareForTransfer>(response);
+            }
+            catch
+            {
+                result = null;
+            }
             return (PrepareForTransfer)result;
         }
         public UpdateTransfer requestUpdateTransfer(string transferUuid, MoneyTransfer toTransfer)
@@ -141,7 +149,15 @@ namespace Aping
             request.RequestFormat = DataFormat.Json;
             request.AddBody(toTransfer);
             var response = restClient.Execute(request);
-            var result = jsonDeserializer.Deserialize<UpdateTransfer>(response);
+            UpdateTransfer result;
+            try
+            {
+                result = jsonDeserializer.Deserialize<UpdateTransfer>(response);
+            }
+            catch
+            {
+                result = null;
+            }
             return (UpdateTransfer)result;
         }
         public ConfirmationOfTransfer requestConfirmationOfTransfer(string pinCode, string transferUuid) //must be always "1,1";
@@ -153,7 +169,15 @@ namespace Aping
             request.RequestFormat = DataFormat.Json;
             request.AddBody(new AcceptanceValue { acceptanceValue = pinCode });
             var response = restClient.Execute(request);
-            var result = jsonDeserializer.Deserialize<ConfirmationOfTransfer>(response);
+            ConfirmationOfTransfer result;
+            try
+            {
+                result = jsonDeserializer.Deserialize<ConfirmationOfTransfer>(response);
+            }
+            catch
+            {
+                result = null;
+            }
             return (ConfirmationOfTransfer)result;
         }
         public bool LogOut()
