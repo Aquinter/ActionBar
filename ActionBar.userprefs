@@ -1,0 +1,27 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ActionBar/Activity1.cs">
+    <Files>
+      <File FileName="ActionBar/Activity1.cs" Line="17" Column="13" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="ActionBar" expanded="True">
+            <Node name="ComponentReferenceFolder" expanded="True" />
+            <Node name="Resources" expanded="True">
+              <Node name="Klasses" expanded="True">
+                <Node name="Coordinate.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.ActionBar />
+</Properties>

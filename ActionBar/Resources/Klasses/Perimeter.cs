@@ -24,7 +24,7 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 		public int getZoneRating(Coordinate coordinate) // 0 = home, 1 = public, 2 = forbidden, 4 = error
 		{
 			double distanceBetween = this.epicenter.distanceBetween (coordinate);
-			if (distanceBetween > 0 && distanceBetween <= shortRange)
+   if (distanceBetween >= 0 && distanceBetween <= shortRange)
 			{
 				return 0;
 			} 
