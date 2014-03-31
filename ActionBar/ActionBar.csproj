@@ -58,6 +58,9 @@
     <Reference Include="Xamarin.Android.Support.v4">
       <HintPath>..\Components\xamandroidsupportv4-18-4.19.0.1\lib\android\Xamarin.Android.Support.v4.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Mobile">
+      <HintPath>..\Components\xamarin.mobile-0.7.1\lib\android\Xamarin.Mobile.dll</HintPath>
+    </Reference>
     <Reference Include="zxing.monoandroid">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Xamarin\Libraries\Zxing Mobile\zxing.monoandroid.dll</HintPath>
     </Reference>
@@ -70,6 +73,11 @@
     <Compile Include="Resources\Klasses\ApIng.cs" />
     <Compile Include="Resources\Klasses\Coordinate.cs" />
     <Compile Include="Resources\Klasses\DatabaseConnection.cs" />
+    <Compile Include="Resources\Klasses\FR\FaceAuthenticator.cs" />
+    <Compile Include="Resources\Klasses\FR\FtpUploader.cs" />
+    <Compile Include="Resources\Klasses\FR\RestResponses\FaceList.cs" />
+    <Compile Include="Resources\Klasses\FR\RestResponses\ModelCreationResponse.cs" />
+    <Compile Include="Resources\Klasses\FR\RestResponses\RecognizeResponse.cs" />
     <Compile Include="Resources\Klasses\GUI\SimpleDialogManager_iOS.cs" />
     <Compile Include="Resources\Klasses\Iban.cs" />
     <Compile Include="Resources\Klasses\JsonContainerClasses\AcceptanceValue.cs" />
@@ -181,6 +189,8 @@
     <AndroidResource Include="Resources\Drawable-xhdpi\ic_action_facebook.png" />
     <AndroidResource Include="Resources\Drawable-xhdpi\ic_action_twitter.png" />
     <AndroidResource Include="Resources\Drawable-mdpi\ic_account_options.png" />
+    <AndroidResource Include="Resources\Drawable\img_test.jpg" />
+    <AndroidResource Include="Resources\Drawable\icon_actionbar.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="restsharp">
@@ -190,6 +200,10 @@
     <XamarinComponentReference Include="xamandroidsupportv4-18">
       <Visible>False</Visible>
       <Version>4.19.0.1</Version>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="xamarin.mobile">
+      <Visible>False</Visible>
+      <Version>0.7.1</Version>
     </XamarinComponentReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

@@ -72,11 +72,48 @@ namespace FaceAuthentication
                 ModelId = result.ModelId;
                 return true;
             }
-            catch (Exception e)
+            catch 
             {
                 //TODO add debugger
                 return false;
             }
+        }
+        public bool RecognizeFace(string webLink)
+        {
+            //
+            if (ModelId != null)
+            {
+                var request = new RestRequest(Method.POST);
+                request.Resource = "api/recognize";
+                request.AddParameter("user", userNameKeyLemon);
+                request.AddParameter("key", appKey);
+                request.AddParameter("urls", webLink);
+                request.AddParameter("models", ModelId);
+                request.RequestFormat = DataFormat.Json;
+
+                var response = restClient.Execute(request);
+                var result = myDeserializer.Deserialize<RecognizeResponse>(response);
+
+                List<Face> myFaces = result.Faces;
+
+                foreach (Face curentFace in myFaces)
+                {
+                    List<Result> myResults = curentFace.Results;
+                    foreach (Result currentResult in myResults)
+                    {
+                        if (currentResult.Score >= 75) //mayby set the score a little bit higer ...
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+            else
+            {
+                return false;
+            }
+            //
         }
         public bool RecognizeFace(string localImagePath, string imageName) //imageName should contain exstension !! .jpg
         {
@@ -105,7 +142,7 @@ namespace FaceAuthentication
                     List<Result> myResults = curentFace.Results;
                     foreach (Result currentResult in myResults)
                     {
-                        if (currentResult.Score >= 65) //mayby set the score a little bit higer ...
+                        if (currentResult.Score >= 40) //mayby set the score a little bit higer ...
                         {
                             AddFaceToModel(localImagePath, imageUrl);
                             return true;
@@ -154,6 +191,7 @@ namespace FaceAuthentication
 
             var response = restClient.Execute(request);
 
+            
             var result = myDeserializer.Deserialize<ModelCreationResponse>(response);
 
             return true;

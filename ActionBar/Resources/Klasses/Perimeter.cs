@@ -9,6 +9,7 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 		Coordinate epicenter;
 		double shortRange;
 		double longRange;
+        string name;
 
 		public Perimeter(Coordinate epicenter)
 		{
@@ -16,8 +17,9 @@ namespace IngHackaton //Moet maar aangepast worden voor het project
 			this.shortRange = 0.0;
 			this.longRange = 0.0;
 		}
-		public Perimeter(Coordinate epicenter, double shortRange, double longRange)
+		public Perimeter(string name, Coordinate epicenter, double shortRange, double longRange)
 		{
+            this.name = name;
 			this.epicenter = epicenter;
 			this.shortRange = shortRange;
 			this.longRange = longRange;

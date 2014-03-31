@@ -26,30 +26,67 @@ using IngHackaton;
 using Android.Content.PM;
 using Android.Telephony;
 using Java.Util;
+//FR
+using FaceAuthentication;
+using System.Net;
+using Xamarin.Media;
 
 using Aping;
+using System.Threading.Tasks;
+using Android.Provider;
+
+using Java.IO;
+using Environment = Android.OS.Environment;
+using Uri = Android.Net.Uri;
+
+//Perimeters
+using Xamarin.Geolocation;
 
 namespace com.ingenious.android
 {
     [Activity(Label = "ING Mobile Banking", MainLauncher = true, Icon = "@drawable/icon", ScreenOrientation = ScreenOrientation.Portrait)]
     public class Activity1 : Activity
     {
+        //Drawer vars
         private DrawerLayout drawerLayout;
         private MyActionBarDrawerToggle drawerToggle;
         private ListView drawerListView;
         private String[] drawerList = { "Mobile Banking", "Info", "Settings" };
         private List<Payment> paymentList = new List<Payment>();
-        //private ApIng myAping = new ApIng("DA02vQ9zQJTy0aDnSp0Do2mc8LTY8o1a", "2904561Y", "1/01/1980");
+
+        //Payment apIng vars
         public MoneyTransfer toTransfer;
         private string pinCode = "1";
+
+        //FR vars
+        private string facename = "gertjanandries";
+        private NetworkCredential credentials = new NetworkCredential("oasa.be", "Euroavia2013");
+        private string ftpServer = "ftp://ftp.oasa.be/SYTYCC/";
+        private string keyLemonApiKey = "Yk8xS4BQi9gkYO74qAPd5Y6LNbHHnmgQLKzRi3Qvk99oONchfDmNOM";
+        private string keyLemonUser = "Dentaku";
+        private bool faceRecog = false;
+
+        private bool hasFR = false;
+        private bool frCorrect = false;
+
+        Java.IO.File _file;
+        Java.IO.File _dir;
+
+        // Perimeters
+        Geolocator locator;
+        Position position;
+        TrustedLocations trusted = new TrustedLocations();
+
 
         /*
          * OnCreate is called when app is started (equivalent to main in ordinary C#)
          */
-        protected override void OnCreate(Bundle bundle)
+        async protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
             SetContentView(Resource.Layout.Main);
+
+            ActionBar.SetIcon(Resource.Drawable.icon_actionbar);
             
             // Set drawer adapter to create list from drawerList array
             drawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
@@ -78,6 +115,12 @@ namespace com.ingenious.android
             LayoutInflater.Inflate(Resource.Layout.mobilebanking, frame);
 
             addMobileBankingTabs();
+
+            locator = new Geolocator(this) { DesiredAccuracy = 50 };
+            Position position = await locator.GetPositionAsync(timeout: 10000);
+
+            //Hard coded Trustedlocation (for testing gpurposes)
+            trusted.addPerimeter(new Perimeter("Home", new Coordinate(50.08, 8.02), 200, 5000));
         }
 
         public void addMobileBankingTabs()
@@ -116,9 +159,7 @@ namespace com.ingenious.android
             switch (tab.Position)
             {
                 case 0:
-                    //LayoutInflater.Inflate(Resource.Layout.accounts, frame);
                     LayoutInflater.Inflate(Resource.Layout.List, frame);
-                    //removeAllTabs();
                     ListView contentListView = FindViewById<ListView>(Resource.Id.activity_list);
                     contentListView.Adapter = new AccountListAdapter(this);
                     break;
@@ -134,22 +175,7 @@ namespace com.ingenious.android
                     Button btn2 = FindViewById<Button>(Resource.Id.button2);
                     btn2.Click += delegate
                     {
-                        //toastQueue();
-                        /*
-                        MoneyTransfer toTransfer = new MoneyTransfer();
-                        toTransfer.from = new Aping.From { productNumber = "14650100911708338200" };
-                        toTransfer.to = new Aping.To { productNumber = "14650100932025956187", titular = "PEPE PEREZ PEREZ" };
-                        toTransfer.currency = "EUR";
-                        toTransfer.operationDate = "30/03/2014";
-                        toTransfer.concept = "this is a first test";
-                        toTransfer.amount = 100.5d;
-                        //UpdateTransfer toTest6 = myAping.requestUpdateTransfer(ToTest5.id, toTransfer);
-                        //ConfirmationOfTransfer toTest7 = myAping.requestConfirmationOfTransfer("1,1", ToTest5.id);
-                        ConfirmationOfTransfer fullPayment = myAping.EasyTransfer(toTransfer, "1,1");
-                        //MessageBox.Show(fullPayment.ToString());
-                        Toast.MakeText(this, fullPayment.ToString(), ToastLength.Long).Show();
-                        myAping.LogOut();
-                         * */
+                        faceRecognition();
                     };
                     break;
                 default:
@@ -159,26 +185,13 @@ namespace com.ingenious.android
 
         public void readXML(string xmlString)
         {
-            using (XmlReader reader = XmlReader.Create(new StringReader(xmlString)))
+            using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(xmlString)))
             {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.SetTitle("Confirm payment?");
                 LayoutInflater inflater = this.LayoutInflater;
                 View view = inflater.Inflate(Resource.Layout.PaymentDialog, null);
-
-                
-                /*
-                TextView[] txt = new TextView[8];
-                txt[0] = view.FindViewById<TextView>(Resource.Id.duedate);
-                txt[1] = view.FindViewById<TextView>(Resource.Id.amount);
-                txt[2] = view.FindViewById<TextView>(Resource.Id.firmname);
-                txt[3] = view.FindViewById<TextView>(Resource.Id.firmaddress1);
-                txt[4] = view.FindViewById<TextView>(Resource.Id.firmaddress2);
-                txt[5] = view.FindViewById<TextView>(Resource.Id.iban);
-                txt[6] = view.FindViewById<TextView>(Resource.Id.bic);
-                txt[7] = view.FindViewById<TextView>(Resource.Id.reference);
-                */
                 Dictionary<String, String> paymentAttribs = new Dictionary<String, String>(20);
 
                 reader.ReadToFollowing("payment");
@@ -190,28 +203,10 @@ namespace com.ingenious.android
                 }
 
                 Payment newPayment = parseXmlToPayment(paymentAttribs);
-                /*
-                if (newPayment.amount > 1000)
-                {
-                    showLargePaymentPopUp(newPayment);
-                }
-                else
-                {
-                    paymentList.Add(newPayment);
-                }
-                */
+
                 builder.SetView(view)
                     .SetPositiveButton("OK", (s1, ev) =>
                     {
-                        //Comfirm payment dialog
-
-
-
-                        //paymentList.Add(newPayment);
-
-                        // execute payment
-
-                        
                         toTransfer = new MoneyTransfer();
                         toTransfer.from = new Aping.From { productNumber = "14650100911708338200" };
                         toTransfer.to = new Aping.To { productNumber = newPayment.iban, titular = newPayment.firmName };
@@ -296,7 +291,6 @@ namespace com.ingenious.android
                         // Enter amount dialog
 
                         newPayment.amount = Convert.ToDecimal(view3.FindViewById<EditText>(Resource.Id.amountValue).Text);
-                        //paymentList.Add(newPayment);
                         setAmountInfo(view, newPayment);
                         builder.Show();
                     })
@@ -328,11 +322,15 @@ namespace com.ingenious.android
              * 4 = perimeter error
              * 5 = no perimeters defined
              * 6 = PIN wrong
+             * 7 = FR incorrect
              */
 
-            
+            faceRecognition();
 
-            return checkPerimeter();
+            if (frCorrect)
+                return checkPerimeter();
+            else
+                return 7;
         }
 
         public int checkPerimeter()
@@ -346,13 +344,13 @@ namespace com.ingenious.android
              * 5 = no perimeters defined
              */
 
-            double lat = 50.2058;
-            double lon = 8.02521;
+            double lat = position.Latitude;
+            double lon = position.Longitude;
 
             Coordinate coord = new Coordinate(lat, lon);
-            Perimeter perimeter = new Perimeter(coord, 200, 5000);
+            //Perimeter perimeter = new Perimeter(coord, 200, 5000);
 
-            int perimeterRating = perimeter.getZoneRating(coord); //should return 0;
+            int perimeterRating = trusted.isTrusted(coord);
 
             switch (perimeterRating)
             {
@@ -361,7 +359,8 @@ namespace com.ingenious.android
                     return 0;
                 case 1:
                     // Public perimeter
-                    return faceRecognition() ? 1 : 2;
+                    faceRecognition();
+                    return faceRecog ? 1 : 2;
                 case 2:
                     // Forbidden perimeter
                     return 3;
@@ -376,12 +375,100 @@ namespace com.ingenious.android
             }
         }
 
-        public bool faceRecognition()
+        public void faceRecognition()
         {
-            return true;
+            if (IsThereAnAppToTakePictures())
+            {
+                CreateDirectoryForPictures();
+                TakeAPicture(this, null);
+            }
+
         }
 
+        /*
+         * 
+         * START FR METHODS
+         * 
+         */
 
+        private bool IsThereAnAppToTakePictures()
+        {
+            Intent intent = new Intent(MediaStore.ActionImageCapture);
+            IList<ResolveInfo> availableActivities = PackageManager.QueryIntentActivities(intent, PackageInfoFlags.MatchDefaultOnly);
+            return availableActivities != null && availableActivities.Count > 0;
+        }
+
+        private void CreateDirectoryForPictures()
+        {
+            _dir = new Java.IO.File(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryPictures), "FaceRecognition");
+            if (!_dir.Exists())
+            {
+                _dir.Mkdirs();
+            }
+        }
+
+        private void TakeAPicture(object sender, EventArgs eventArgs)
+        {
+            Intent intent = new Intent(MediaStore.ActionImageCapture);
+
+            //_file = new Java.IO.File(_dir, String.Format("myPhoto_{0}.jpg", Guid.NewGuid()));
+            _file = new Java.IO.File(_dir, String.Format("phoneFace.jpg"));
+
+            intent.PutExtra(MediaStore.ExtraOutput, Uri.FromFile(_file));
+
+            StartActivityForResult(intent, 0);
+        }
+
+        protected override void OnActivityResult(int requestCode, Android.App.Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+
+            // make it available in the gallery
+            /*
+            Intent mediaScanIntent = new Intent(Intent.ActionMediaScannerScanFile);
+            Uri contentUri = Uri.FromFile(_file);
+            mediaScanIntent.SetData(contentUri);
+            SendBroadcast(mediaScanIntent);
+            */
+            try
+            {
+                FaceAuthenticator faceAuth = new FaceAuthenticator(keyLemonUser, keyLemonApiKey, ftpServer, credentials, "http://oasa.be/SYTYCC", facename);
+                
+                faceAuth.ModelId = "f6c53c96-f2e4-4ed0-864d-266215ff1837";
+                try
+                {
+                    //Toast.MakeText(this, System.IO.File.Exists(@"/storage/extSdCard/Pictures/FaceRecognition/face.jpg").ToString(), ToastLength.Long).Show();
+                    Toast.MakeText(this, "2: " + faceAuth.AddFaceToModel(@"/storage/extSdCard/Pictures/FaceRecognition/phoneFace.jpg", "face.jpg").ToString(), ToastLength.Long).Show();
+                    //Toast.MakeText(this, "1: " + faceAuth.RecognizeFace("http://oasa.be/SYTYCC/face.jpg").ToString(), ToastLength.Long).Show();
+                    //faceAuth.AddFaceToModel(@"/storage/extSdCard/Pictures/FaceRecognition/phoneFace.jpg", "face.jpg");
+                    //faceAuth.RecognizeFace(@"/storage/extSdCard/Pictures/FaceRecognition/phoneFace.jpg", "face.jpg");
+                    bool succeeded  = faceAuth.RecognizeFace("http://oasa.be/SYTYCC/face.jpg");
+
+                    Toast.MakeText(this, "2: " + succeeded.ToString(), ToastLength.Long).Show();
+                    //Toast.MakeText(this, "2: " + faceAuth.RecognizeFace(@"/storage/extSdCard/Pictures/FaceRecognition/phoneFace.jpg", "face.jpg").ToString(), ToastLength.Long).Show();
+                    hasFR = true;
+                    frCorrect = true;
+                }
+                catch
+                {
+                    Toast.MakeText(this, "1: " + faceAuth.RecognizeFace("http://oasa.be/SYTYCC/face.jpg").ToString(), ToastLength.Long).Show();
+                    hasFR = true;
+                    frCorrect = true;
+                }
+            }
+            catch(Exception e)
+            {
+                Toast.MakeText(this, e.Message.ToString() + "\n" + e.StackTrace.ToString(), ToastLength.Long).Show();
+                hasFR = true;
+                frCorrect = false;
+            }
+        }
+
+        /*
+         * 
+         * END FR METHODS
+         * 
+         */
 
 
         public void setAmountInfo(View view, Payment newPayment)
@@ -394,8 +481,6 @@ namespace com.ingenious.android
             view.FindViewById<TextView>(Resource.Id.iban).Text = newPayment.iban;
             view.FindViewById<TextView>(Resource.Id.bic).Text = newPayment.bic;
             view.FindViewById<TextView>(Resource.Id.reference).Text = newPayment.reference;
-
-            //view.FindViewById<TextView>(Resource.Id.textView31).Text = ((TelephonyManager)this.GetSystemService(TelephonyService)).DeviceId.ToString();
         }
 
         private Payment parseXmlToPayment(Dictionary<String, String> list)

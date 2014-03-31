@@ -105,6 +105,12 @@ namespace com.ingenious.android
 			// aapt resource value: 0x7f020007
 			public const int Icon = 2130837511;
 			
+			// aapt resource value: 0x7f020008
+			public const int icon_actionbar = 2130837512;
+			
+			// aapt resource value: 0x7f020009
+			public const int img_test = 2130837513;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
